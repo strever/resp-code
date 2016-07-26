@@ -16,44 +16,42 @@ namespace Strever\Utils;
 class RespCode
 {
     // [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。
-    const Err_Invalid_Request = 400;
+    const ERR_BAD_REQUEST = 400;
 
     // 表示用户没有权限（令牌、用户名、密码错误）。
-    const Err_Unauthorized = 401;
+    const ERR_UNAUTHORIZED = 401;
 
     // 表示用户得到授权（与401错误相对），但是访问是被禁止的。
-    const Err_Forbidden = 403;
+    const ERR_FORBIDDEN = 403;
 
     // 用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。
-    const Err_Not_Found = 404;
+    const ERR_NOT_FOUND = 404;
 
-    // 用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。
-    const Err_Not_Acceptable = 406;
+    // 用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。或者认为不提供这种服务
+    const ERR_NOT_ACCEPTABLE = 406;
 
     // [GET]：用户请求的资源被永久删除，且不会再得到的。
-    const Err_Gone = 410;
-
-    // [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。
-    const Err_Unprocessable_Entity = 422;
+    const ERR_GONE = 410;
 
     // 服务器发生错误，用户将无法判断发出的请求是否成功。
-    const Err_Internal = 500;
+    const ERR_INTERNAL = 500;
 
     // 未知错误
-    const Err_Unknown = 510;
+    const ERR_UNKNOWN = 510;
 
     // 无效参数
-    const Err_Invalid_Params = 420;
+    const ERR_INVALID_PARAMS = 420;
 
     // 请求鉴权token未通过
-    const Err_Invalid_Token = 440;
+    const ERR_INVALID_TOKEN = 440;
 
     // 不是cli请求
-    const Err_Not_Cli = 450;
-
-    const 尼玛这是一个奇葩的错误_不要随便带标点符号 = 499;
+    const ERR_NOT_CLI = 450;
 
 
+    /**
+     * @var \ReflectionClass
+     */
     private static $_reflectionClass = null;
 
     /**
@@ -61,20 +59,44 @@ class RespCode
      *
      * @author strever
      * @date 2016/5/5
-     * @return object
+     * @return \ReflectionClass
      */
     public static function getReflectionClass()
     {
-        if(!self::$_reflectionClass instanceof ReflectionClass)
+        if(!self::$_reflectionClass instanceof \ReflectionClass)
         {
-            self::$_reflectionClass = new ReflectionClass(__CLASS__);
+            self::$_reflectionClass = new \ReflectionClass(__CLASS__);
         }
 
         return self::$_reflectionClass;
     }
 
     /**
+     * 检查常量是否已经定义
+     *
+     * @param $constant
+     * @return bool
+     */
+    public static function hasConstant($constant)
+    {
+        $reflectionClass = self::getReflectionClass();
+        return $reflectionClass->hasConstant($constant);
+    }
+
+    /**
      * 获取定义的常量
+     *
+     * @param $constant
+     * @return mixed
+     */
+    public static function getConstant($constant)
+    {
+        $reflectionClass = self::getReflectionClass();
+        return $reflectionClass->getConstant($constant);
+    }
+
+    /**
+     * 获取定义的所有常量
      *
      * @author Strever <xingjian@juanpi.com>
      * @date 2016/5/5
@@ -110,6 +132,6 @@ class RespCode
      */
     public static function getMessage($constantValue)
     {
-        return ($msg = self::getConstantName($constantValue)) ? $msg : 'Err_Unknown';
+        return ($msg = self::getConstantName($constantValue)) ? strtolower(str_replace(['ERR_', '_'], ['', ' '], $msg)) : 'unknown';
     }
 }

@@ -9,20 +9,25 @@ a naming convention about response code
 ## Usage Docs
 
 ```php
-\Strever\Util\RespCode::success();
+\Strever\Util\Resp::success(['id' => 1]);
 
-\Strever\Util\RespCode::error(404);
+\Strever\Util\Resp::fail(404);
 ```
 
 ### api list
 
-- error
+- fail
+- failWithJson
+- notFound
+- invalidParams
 - success
+- successWithJson
+...
 
 
 ## UnitTest
 
-`$ phpunit tests/Util/RespCodeTest.php`
+`$ phpunit tests/Util/RespTest.php`
 
 ## Contact
 
