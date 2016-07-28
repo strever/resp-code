@@ -27,11 +27,17 @@ class RespCode
     // 用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。
     const ERR_NOT_FOUND = 404;
 
+    // 该http方法不被允许,比如不允许get访问
+    const ERR_METHOD_NOT_ALLOWED = 405;
+
     // 用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。或者认为不提供这种服务
     const ERR_NOT_ACCEPTABLE = 406;
 
     // [GET]：用户请求的资源被永久删除，且不会再得到的。
     const ERR_GONE = 410;
+
+    // 请求过多
+    const ERR_TOO_MANY_REQUEST = 429;
 
     // 服务器发生错误，用户将无法判断发出的请求是否成功。
     const ERR_INTERNAL = 500;
