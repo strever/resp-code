@@ -11,7 +11,7 @@
  *      Strever     2016/7/22 12:49      1.0            第一次建立该文件
  *
  */
-namespace Strever\Utils;
+namespace Strever\Http;
 
 class RespCode
 {

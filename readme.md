@@ -12,6 +12,8 @@ a naming convention about response code
 \Strever\Util\Resp::success(['id' => 1]);
 
 \Strever\Util\Resp::fail(404);
+
+\Strever\Util\Resp::notFound();
 ```
 
 ### api list
